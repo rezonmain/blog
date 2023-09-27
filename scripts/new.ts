@@ -6,9 +6,9 @@ const shouldAskAll = process.argv[2] === "--ask";
 
 const DEFAULTS: PostMeta = {
   name: "new-post",
-  title: "post title",
+  title: "Post Title",
   author: "rezonmain",
-  description: "Super cool post",
+  description: "Post description",
 };
 
 const questions = (
