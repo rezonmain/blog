@@ -17,4 +17,9 @@ export class FileHelper {
     filterOutList: string[] = [],
   ): Promise<string[]> =>
     (await fs.readdir(path)).filter((f) => !filterOutList.includes(f));
+
+  static async read(path: string): Promise<string> {
+    const fileContents = await fs.readFile(path, "utf-8");
+    return fileContents;
+  }
 }
