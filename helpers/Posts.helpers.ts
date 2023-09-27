@@ -1,6 +1,7 @@
 import type { PostMeta } from "@/repository/post/post.types";
 import { FileHelper } from "./File.helpers";
 import type { PostResponseDto } from "@/repository/post/post.dto";
+import { Strings } from "./Strings.helpes";
 
 class PostsHelper {
   POSTS_PATH = "./app/post";
@@ -35,6 +36,15 @@ class PostsHelper {
   private getPostNames = async (): Promise<string[]> =>
     await FileHelper.ls(this.POSTS_PATH, this.IGNORED_FILE_NAMES);
 
+  private getNewPostPageContent = ({ name }: PostMeta) => {
+    const camelName = Strings.kebabToPascal(name);
+    return `import ${camelName} from "./${name}.mdx";
+
+export default function Page() {
+  return <${camelName} />;
+}
+`;
+  };
   /**
    * Throws if a post .mdx file does not match
    * its folder name.
@@ -71,6 +81,27 @@ class PostsHelper {
     this.validateFileNames(postsNames);
 
     return await Promise.all(postsNames.map(this.getPostMeta));
+  }
+
+  async createPost(postMeta: PostMeta) {
+    const postPath = this.toFilePath(postMeta.name);
+    const postContent = `export const meta = ${JSON.stringify(
+      postMeta,
+      null,
+      2,
+    )};\n\n# ${postMeta.title}`;
+
+    // Create directory
+    await FileHelper.mkdir(`${this.POSTS_PATH}/${postMeta.name}`);
+
+    // Write .mdx file
+    await FileHelper.write(postPath, postContent);
+
+    // Write page.tsx file
+    await FileHelper.write(
+      `${this.POSTS_PATH}/${postMeta.name}/page.tsx`,
+      this.getNewPostPageContent(postMeta),
+    );
   }
 }
 
