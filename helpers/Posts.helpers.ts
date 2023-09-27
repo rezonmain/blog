@@ -1,7 +1,7 @@
 import type { PostMeta } from "@/repository/post/post.types";
 import { FileHelper } from "./File.helpers";
 import type { PostResponseDto } from "@/repository/post/post.dto";
-import { Strings } from "./Strings.helpes";
+import { Strings } from "./Strings.helpers";
 
 class PostsHelper {
   POSTS_PATH = "./app/post";
