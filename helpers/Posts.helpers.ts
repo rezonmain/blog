@@ -4,25 +4,36 @@ import type { PostResponseDto } from "@/repository/post/post.dto";
 
 class PostsHelper {
   POSTS_PATH = "./app/post";
-  IGNORED_FILES = ["layout.tsx"];
+  IGNORED_FILE_NAMES = ["layout.tsx"];
   POST_FILE_EXTENSION = "mdx";
   POST_HREF_PREFIX = "/post";
 
+  private parsePostMeta = (postContent: string): PostMeta => {
+    const START = "export const meta = { ";
+    const END = "}";
+    const keyPair = postContent
+      .substring(
+        postContent.indexOf(START) + START.length,
+        postContent.indexOf(END) + END.length - 1,
+      )
+      .trim();
+    const keyPairCommaRemoved = keyPair.substring(0, keyPair.length - 1);
+    return keyPairCommaRemoved.split(",").reduce((acc, curr) => {
+      const [key, value] = curr.split(":").map((s) => s.trim());
+      return { ...acc, [key]: value.replaceAll('"', "") };
+    }, {}) as PostMeta;
+  };
+
   private getPostMeta = async (postPath: string): Promise<PostMeta> => {
-    // ../app/post needs to be hardcoded in order to resolve after the build step
-    const meta = (await import(`../app/post/${postPath}/${postPath}.mdx`)).meta;
-    if (!meta)
-      throw new Error(
-        `[getPostMeta] Post ${postPath} has no exported object meta`,
-      );
-    return meta;
+    const fileContents = await FileHelper.read(this.toFilePath(postPath));
+    return this.parsePostMeta(fileContents);
   };
 
   private toFilePath = (postName: string): string =>
     `${this.POSTS_PATH}/${postName}/${postName}.${this.POST_FILE_EXTENSION}`;
 
-  getPostNames = async (): Promise<string[]> =>
-    await FileHelper.ls(this.POSTS_PATH, this.IGNORED_FILES);
+  private getPostNames = async (): Promise<string[]> =>
+    await FileHelper.ls(this.POSTS_PATH, this.IGNORED_FILE_NAMES);
 
   /**
    * Throws if a post .mdx file does not match
@@ -36,7 +47,7 @@ class PostsHelper {
    */
   validateFileNames = async (postNames?: string[]) => {
     const postFolderNames = postNames ?? (await this.getPostNames());
-    for (const postName in postFolderNames) {
+    for (const postName of postFolderNames) {
       const postPath = this.toFilePath(postName);
 
       const exists = await FileHelper.exists(postPath);
