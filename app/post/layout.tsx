@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function PostLayout({
   children,
 }: {
@@ -5,6 +7,9 @@ export default function PostLayout({
 }) {
   return (
     <section>
+      <header>
+        <Link href="/">Home</Link>
+      </header>
       <article>{children}</article>
     </section>
   );
