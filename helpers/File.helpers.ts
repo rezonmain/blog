@@ -22,4 +22,12 @@ export class FileHelper {
     const fileContents = await fs.readFile(path, "utf-8");
     return fileContents;
   }
+
+  static async write(path: string, content: string) {
+    fs.writeFile(path, content);
+  }
+
+  static async mkdir(path: string) {
+    await fs.mkdir(path, { recursive: true });
+  }
 }
