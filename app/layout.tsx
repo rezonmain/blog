@@ -1,8 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Exo_2 } from "next/font/google";
+import { Header } from "@/components/Header/Header";
 
-const inter = Inter({ subsets: ["latin"] });
+const exo2 = Exo_2({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "home",
@@ -16,7 +17,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={exo2.className}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
