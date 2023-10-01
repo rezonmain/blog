@@ -3,7 +3,7 @@ interface PostMeta {
   title: string;
   description: string;
   author: string;
-  publishedAt?: string;
+  publishedAt?: string; // ISO 8601 string
   version?: string;
 }
 
