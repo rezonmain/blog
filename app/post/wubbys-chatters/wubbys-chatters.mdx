@@ -9,8 +9,35 @@ export const meta = {
 
 ---
 
-Inspired by a post on the H3H3podcast's [subreddit](https://www.reddit.com/r/h3h3productions/comments/16op37y/why_ethan_should_not_listen_to_members_chat_data/),
-where user u/Norishoe used OCR to the determine the number of unique chatters, I decided
-to do something similar for PaymoneyWubby's [twitch](https://www.twitch.tv/paymoneywubby) chat.
+We all've seen or heard of laws or patterns like the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) or the [80/20 rule](https://en.wikipedia.org/wiki/Pareto_principle#In_business) where 80% of the effects come from 20% of the causes. I wanted to explore if this was true for PaymoneyWubby's chat, to ask the question _what percentage of the chatters are responsible for what percentage of the chat messages?_, aka how much _oneguyed_ does Wubby get?
 
-We all've seen or heard of laws or patterns like the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) or the [80/20 rule](https://en.wikipedia.org/wiki/Pareto_principle#In_business), where 80% of the effects come from 20% of the causes. I wanted to explore if this was true for PaymoneyWubby's chat, to ask the question _what percentage of the chatters are responsable for what percentage of the chat messages?_, aka how much _oneguyed_ does wubby get?
+[Skip to results](#the-results)
+
+## the why
+
+Inspired by a post on the H3H3podcast's [subreddit](https://www.reddit.com/r/h3h3productions/comments/16op37y/why_ethan_should_not_listen_to_members_chat_data/),
+where user u/Norishoe used OCR to determine the number of unique chatters, I decided
+to do something similar for PaymoneyWubby's [twitch](https://www.twitch.tv/paymoneywubby) chat. With the goal of concluding with a statement that would give us an idea of how much _oneguyed_ Wubby gets.
+
+## the how
+
+I'd create a custom program that'd hook into PaymoneyWubby's twitch chat and listen for messages, unlike u/Norishoe's, this approach would record _every single message_ sent by chatterrs (from the time Wubby goes live, to the time stream ends), instead of taking a sample of the chat every _x_ amount of time.
+I'm not saying my approach'd be "better", I'm stating that this way we'd get lots more data points, and thus, a more reflective result of the conclusion we're trying to get to.
+
+This program would run for the duration of a single PaymoneyWubby's stream on Sunday Oct 1st, 2023, the program'd also collect the number of viewers reported by twitch's API every 10 minutes from the start of stream to its end.
+
+When the stream ends, the program would stop collecting data, and run an analysis on it, this analysis would yield stats like the total number of messages sent, the number of unique chatters, a tally of messages sent by each chatter, average viewership numbers, etc.
+
+This program's source code can be [found on github](https://github.com/rezonmain/ercount), and the raw data collected is [available here](https://github.com/rezonmain/ercount) for anyone interested in corroborating my results or for further analysis.
+
+## the results
+
+The program successfully ran for ^^^ and collected a total of ^^^ chat messages, which were sent by ^^^ unique chatters.
+
+### ratio of chatters against viewers
+
+With Wubby's stream viewership reaching a maximum\* of ^^^ viewers,
+
+### top 10 chatters
+
+### viewer engagement
