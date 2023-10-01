@@ -15,7 +15,7 @@ const Avatar: React.FC<Props> = ({ imgSrc, name, showAuthorTag = false }) => {
       </div>
       <div className="flex flex-col">
         {showAuthorTag && <Tag text="author" />}
-        <span className="text-xl leading-none">{name}</span>
+        <span className="text-lg leading-none">{name}</span>
       </div>
     </div>
   );
