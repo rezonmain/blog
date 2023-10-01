@@ -1,5 +1,11 @@
+import { Wip } from "@/components/Wip/Wip";
 import WubbysChatters from "./wubbys-chatters.mdx";
 
 export default function Page() {
-  return <WubbysChatters />;
+  return (
+    <>
+      <Wip />
+      <WubbysChatters />;
+    </>
+  );
 }
