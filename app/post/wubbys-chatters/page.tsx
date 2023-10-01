@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import { Wip } from "@/components/Wip/Wip";
-import WubbysChatters from "./wubbys-chatters.mdx";
+import WubbysChatters, { meta } from "./wubbys-chatters.mdx";
+
+export const metadata: Metadata = {
+  ...meta,
+};
 
 export default function Page() {
   return (
