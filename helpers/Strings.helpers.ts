@@ -7,6 +7,9 @@ class Strings {
 
   static kebabToPascal = (str: string): string =>
     Strings.capitalizeFirst(Strings.kebabToCamel(str));
+
+  static strToKebab = (str: string): string =>
+    str.toLocaleLowerCase().replace(/\s+/g, "-");
 }
 
 export { Strings };
