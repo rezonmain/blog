@@ -32,7 +32,8 @@ export default function Page() {
             alt="Cheetah being so cute"
             width="200"
             height="200"
-            className=" rounded-2xl"
+            className="h-auto w-auto rounded-2xl"
+            priority
           />
           <p>Cheetah</p>
         </div>
@@ -43,7 +44,8 @@ export default function Page() {
             alt="Ashallah being the cutest girl"
             width="200"
             height="200"
-            className=" rounded-2xl"
+            className="h-auto w-auto rounded-2xl"
+            priority
           />
           <p>Ashalláh</p>
         </div>
