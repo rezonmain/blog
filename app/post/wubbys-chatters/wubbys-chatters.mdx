@@ -8,14 +8,11 @@ export const meta = {
 };
 
 import {
-  top10ChattersTally,
-  topChatterChartOptions,
-  topChatterChartData,
-  stats,
-  viewerEngagement,
-  viewerEngagementChartData,
-  viewerEngagementChartOptions,
-  viewershipChartData,
+  STATS,
+  VIEWER_ENGAGEMENT,
+  TOP_10_CHATTERS_CHART,
+  VIEWER_ENGAGEMENT_CHART,
+  VIEWERSHIP_CHART,
 } from "./constants";
 
 <PostHeader title={meta.title} author={meta.author} date={meta.publishedAt} />
@@ -60,7 +57,7 @@ _Example of the data the program would collect_
 
 This program would run for the duration of a single PaymoneyWubby's stream on <s>Sunday Oct 1st, 2023</s> (brother was sick as a dog, and Alluux was getting hypnotized) Wednesday, Oct 4th, 2023, the program would also log the number of viewers reported by twitch's API every 10 minutes from the start of stream.
 
-When the stream ends, the program would stop collecting data, and run an analysis on it, this analysis would yield stats like the total number of messages sent, the number of unique chatters, a tally of messages sent by each chatter, average viewership numbers, etc.
+When the stream ends, the program would stop collecting data, and run an analysis on it, this analysis would yield STATS like the total number of messages sent, the number of unique chatters, a tally of messages sent by each chatter, average viewership numbers, etc.
 
 ```json
 "fileMeta": {
@@ -87,7 +84,7 @@ When the stream ends, the program would stop collecting data, and run an analysi
 
 _Example of the data the analysis step of the program would output_
 
-Then I would gather these stats, and report conclusions based on them.
+Then I would gather these STATS, and report conclusions based on them.
 This program's source code can be [found on github](https://github.com/rezonmain/ercount), and the raw data collected is [available here](https://github.com/rezonmain/ercount) for anyone interested in corroborating my results or for further analysis.
 
 ## the results
@@ -102,9 +99,9 @@ from 5:30pm to 8:40pm PST, collecting chat messages and viewer numbers for the e
 
 As outputted by the program:
 
-> - Out of an average of **{Math.round(stats.views.avg).toLocaleString()}** viewers, **{stats.chatters.unique.toLocaleString()} unique chatters** sent a total of **{stats.chatters.totalChats.toLocaleString()} messages**,
-> - Meaning **{(stats.engagement.engagement).toFixed(2)}% of viewers** engaged by sending at least one message on stream,
-> - Out of the {stats.chatters.totalChats.toLocaleString()} unique chatters, the top **20%** are responsible of **76.23%** of all the messages sent!,
+> - Out of an average of **{Math.round(STATS.views.avg).toLocaleString()}** viewers, **{STATS.chatters.unique.toLocaleString()} unique chatters** sent a total of **{STATS.chatters.totalChats.toLocaleString()} messages**,
+> - Meaning **{(STATS.engagement.engagement).toFixed(2)}% of viewers** engaged by sending at least one message on stream,
+> - Out of the {STATS.chatters.totalChats.toLocaleString()} unique chatters, the top **20%** are responsible of **76.23%** of all the messages sent!,
 > - Meaning that the top **200 chatters** are responsible of **37.13%** of ALL the messages sent,
 > - And the top **10 chatters** are responsible of **6.40%** of all the messages sent
 
@@ -112,24 +109,21 @@ As outputted by the program:
 
 The 👑 top chatter, with a total of **691** messages sent, representing **1.06%** of the total, (beating even Nightbot) was: **mr_mustash**, 2nd place goes to **PiercingThread7** with a close **674** messages, and 3rd (skipping Nightbot) goes to **quabop** with **459**, congrats on being such prolific spammers I guess.
 
-<BarChart options={topChatterChartOptions} data={topChatterChartData} />
+<BarChart {...TOP_10_CHATTERS_CHART} />
 
 ### viewership
 
 As mentioned in [the how](#the-how), the program queries twitch's API every 10 minutes from the start of stream to get the stream views, sooo... here's just a line chart of views over time, just because I can.
 
-<LineChart data={viewershipChartData} />
+<LineChart {...VIEWERSHIP_CHART} />
 
 I just want to point out that viewership peaked when Alex Johns was being choked out. That's all for this analysis.
 
 ### engagement
 
-As mentioned in the summary of results, **{stats.engagement.engagement.toFixed(2)}%** of viewers engaged by sending at least one message on stream, I wanted to know how this number compares to other streamers, so I ran this same program on a typical hasanabi stream, on qtcinderella's rain forest charity gala stream, and a late night willneff stream, here are the results:
+As mentioned in the summary of results, **{STATS.engagement.engagement.toFixed(2)}%** of viewers engaged by sending at least one message on stream, I wanted to know how this number compares to other streamers, so I ran this same program on a typical hasanabi stream, on qtcinderella's rain forest charity gala stream, and a late night willneff stream, here are the results:
 
-<BarChart
-  options={viewerEngagementChartOptions}
-  data={viewerEngagementChartData}
-/>
+<BarChart {...VIEWER_ENGAGEMENT_CHART} />
 
 Engagement is calculated by diving the amount of unique chatters by the average viewership, and as you can see Wubby has the most out of the 4 streamers, though I think these result aren't that concrete because the engagement here is calculated from only one live stream of each streamer, and the engagement of a streamer can vary wildly depending on the content of the stream, the time of day, the day of the week, etc. So don't conclude anything significant from these results.
 
@@ -149,4 +143,4 @@ But what about the other streamers, do they get _oneguyed_ to?, lets see:
   ]}
 />
 
-Holy crap, looks like is pretty consistent across all of our limited 4 measurements, I guest getting _oneguyed_ is just inevitable if you're a streamer.
+Holy crap, looks like is pretty consistent across all of our limited 4 measurements, I guess getting _oneguyed_ is just inevitable if you're a streamer.
