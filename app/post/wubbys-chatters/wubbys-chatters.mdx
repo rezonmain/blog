@@ -7,39 +7,146 @@ export const meta = {
   publishedAt: "2023-10-01T08:37:22.321Z",
 };
 
+import {
+  top10ChattersTally,
+  topChatterChartOptions,
+  topChatterChartData,
+  stats,
+  viewerEngagement,
+  viewerEngagementChartData,
+  viewerEngagementChartOptions,
+  viewershipChartData,
+} from "./constants";
+
 <PostHeader title={meta.title} author={meta.author} date={meta.publishedAt} />
 
 ---
 
-We all've seen or heard of laws or patterns like the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) or the [80/20 rule](https://en.wikipedia.org/wiki/Pareto_principle#In_business) where 80% of the effects come from 20% of the causes. I wanted to explore if this was true for PaymoneyWubby's chat, to ask the question _what percentage of the chatters are responsible for what percentage of the chat messages?_, aka how much _oneguyed_ does Wubby get?
+We all've seen or heard of laws or patterns like the [Pareto principle](https://en.wikipedia.org/wiki/Pareto_principle) where 80% of the effects come from 20% of the causes. I wanted to explore if this was true for PaymoneyWubby's chat, to ask the question, _what percentage of the chatters are responsible for what percentage of the chat messages?_, aka how much _oneguyed_ does Wubby get?
+
+It turns out that the answer is _a lot_.
 
 [Skip to results](#the-results)
 
 ## the why
 
-Inspired by a post on the H3H3podcast's [subreddit](https://www.reddit.com/r/h3h3productions/comments/16op37y/why_ethan_should_not_listen_to_members_chat_data/),
-where user u/Norishoe used OCR to determine the number of unique chatters, I decided
+Inspired by a post on the H3podcast's [subreddit](https://www.reddit.com/r/h3h3productions/comments/16op37y/why_ethan_should_not_listen_to_members_chat_data/),
+where user u/Norishoe used OCR to determine the number of unique chatters during a 15 minute "end of show debate" on an episode of the H3podcast, I decided
 to do something similar for PaymoneyWubby's [twitch](https://www.twitch.tv/paymoneywubby) chat. With the goal of concluding with a statement that would give us an idea of how much _oneguyed_ Wubby gets.
 
 ## the how
 
-I'd create a custom program that'd hook into PaymoneyWubby's twitch chat and listen for messages, unlike u/Norishoe's, this approach would record _every single message_ sent by chatterrs (from the time Wubby goes live, to the time stream ends), instead of taking a sample of the chat every _x_ amount of time.
-I'm not saying my approach'd be "better", I'm stating that this way we'd get lots more data points, and thus, a more reflective result of the conclusion we're trying to get to.
+I'd create a custom program that would hook into PaymoneyWubby's twitch chat and listen for messages, unlike u/Norishoe's, this approach would record _every single message_ sent by chatters and for the _entire duration of stream_.
+I'm not saying my approach would be "better", I'm stating that this way we'd get lots more data points, and thus, a more reflective result of the conclusion we're trying to get to.
 
-This program would run for the duration of a single PaymoneyWubby's stream on Sunday Oct 1st, 2023, the program'd also collect the number of viewers reported by twitch's API every 10 minutes from the start of stream to its end.
+```log
+2023-10-05T00:30:18.867Z ZondoE LFG!!!!!!!!!!!!!
+2023-10-05T00:30:19.064Z jaxthekey LES GOOOOOOOO Pog
+2023-10-05T00:30:19.107Z GuestWiFi Pog
+2023-10-05T00:30:19.140Z Tall_Awkward_Kid ON TIME Pog
+2023-10-05T00:30:19.273Z crazyazzkile NOT LATE NOT LATE NOT LATE NOT LATE
+2023-10-05T00:30:19.283Z SilentKnightV wubby7
+2023-10-05T00:30:19.338Z Nucleardonkey LETSGO
+2023-10-05T00:30:19.879Z Chimpy26x LETS GO
+2023-10-05T00:30:19.961Z Nightbot Binoculars CoffeeTime
+2023-10-05T00:30:19.974Z garykemp I WAS SOO RIGHT I BELIEVED
+2023-10-05T00:30:20.063Z teamoneysign Eeeeeeeeeeeee
+2023-10-05T00:30:20.086Z SugarLipzz -2.7k
+2023-10-05T00:30:20.233Z Crusade_Time NOT LATE
+...
+```
+
+_Example of the data the program would collect_
+
+This program would run for the duration of a single PaymoneyWubby's stream on <s>Sunday Oct 1st, 2023</s> (brother was sick as a dog, and Alluux was getting hypnotized) Wednesday, Oct 4th, 2023, the program would also log the number of viewers reported by twitch's API every 10 minutes from the start of stream.
 
 When the stream ends, the program would stop collecting data, and run an analysis on it, this analysis would yield stats like the total number of messages sent, the number of unique chatters, a tally of messages sent by each chatter, average viewership numbers, etc.
 
+```json
+"fileMeta": {
+    "channelName": "willneff",
+    "logTimes": {
+      "init": "2023-10-01T07:37:28.698Z",
+      "end": "2023-10-01T09:34:05.186Z"
+    },
+    "streamTitles": [
+      "It Dode GAMING SATURDAY"
+    ]
+  },
+  "views": {
+    "max": 3112,
+    "min": 2529,
+    "avg": 2821.33
+  },
+  "chatters": {
+    "unique": 295,
+    "totalChats": 1781
+  },
+  ...
+```
+
+_Example of the data the analysis step of the program would output_
+
+Then I would gather these stats, and report conclusions based on them.
 This program's source code can be [found on github](https://github.com/rezonmain/ercount), and the raw data collected is [available here](https://github.com/rezonmain/ercount) for anyone interested in corroborating my results or for further analysis.
 
 ## the results
 
-The program successfully ran for ^^^ and collected a total of ^^^ chat messages, which were sent by ^^^ unique chatters.
+The program successfully ran for the stream on Wednesday, Oct 4th, 2023, titled:
 
-### ratio of chatters against viewers
+> FINALLY BACK LETS GO SO MUCH TO DO CRAMMING CONTENT LIKE MOM CRAMS THE GEARSHIFT STRAIGHT UP THE OL
 
-With Wubby's stream viewership reaching a maximum\* of ^^^ viewers,
+from 5:30pm to 8:40pm PST, collecting chat messages and viewer numbers for the entire duration of the live stream.
+
+### summary of results
+
+As outputted by the program:
+
+> - Out of an average of **{Math.round(stats.views.avg).toLocaleString()}** viewers, **{stats.chatters.unique.toLocaleString()} unique chatters** sent a total of **{stats.chatters.totalChats.toLocaleString()} messages**,
+> - Meaning **{(stats.engagement.engagement).toFixed(2)}% of viewers** engaged by sending at least one message on stream,
+> - Out of the {stats.chatters.totalChats.toLocaleString()} unique chatters, the top **20%** are responsible of **76.23%** of all the messages sent!,
+> - Meaning that the top **200 chatters** are responsible of **37.13%** of ALL the messages sent,
+> - And the top **10 chatters** are responsible of **6.40%** of all the messages sent
 
 ### top 10 chatters
 
-### viewer engagement
+The 👑 top chatter, with a total of **691** messages sent, representing **1.06%** of the total, (beating even Nightbot) was: **mr_mustash**, 2nd place goes to **PiercingThread7** with a close **674** messages, and 3rd (skipping Nightbot) goes to **quabop** with **459**, congrats on being such prolific spammers I guess.
+
+<BarChart options={topChatterChartOptions} data={topChatterChartData} />
+
+### viewership
+
+As mentioned in [the how](#the-how), the program queries twitch's API every 10 minutes from the start of stream to get the stream views, sooo... here's just a line chart of views over time, just because I can.
+
+<LineChart data={viewershipChartData} />
+
+I just want to point out that viewership peaked when Alex Johns was being choked out. That's all for this analysis.
+
+### engagement
+
+As mentioned in the summary of results, **{stats.engagement.engagement.toFixed(2)}%** of viewers engaged by sending at least one message on stream, I wanted to know how this number compares to other streamers, so I ran this same program on a typical hasanabi stream, on qtcinderella's rain forest charity gala stream, and a late night willneff stream, here are the results:
+
+<BarChart
+  options={viewerEngagementChartOptions}
+  data={viewerEngagementChartData}
+/>
+
+Engagement is calculated by diving the amount of unique chatters by the average viewership, and as you can see Wubby has the most out of the 4 streamers, though I think these result aren't that concrete because the engagement here is calculated from only one live stream of each streamer, and the engagement of a streamer can vary wildly depending on the content of the stream, the time of day, the day of the week, etc. So don't conclude anything significant from these results.
+
+### conclusion, the top 20%
+
+If you remember, we wanted to answer if the Pareto principle applied to Wubby's chat, and it kinda seems like it does, the top 20% of chatters were responsible for 76.23% of all the messages sent, not quite 80%, but I think that we can conclude that when Wubby _feels_ like the entire chat's turning against him, is really just the top 20% of chatters, so in my opinion Wubby gets _oneguyed_ hard as fuck.
+
+But what about the other streamers, do they get _oneguyed_ to?, lets see:
+
+<Table
+  headers={["streamer", "% of messages by 20% of chatters"]}
+  data={[
+    ["paymoneywubby", "76.23%"],
+    ["willneff", "73.44%"],
+    ["qtcinderella", "75.12%"],
+    ["hasanabi", "75.89%"],
+  ]}
+/>
+
+Holy crap, looks like is pretty consistent across all of our limited 4 measurements, I guest getting _oneguyed_ is just inevitable if you're a streamer.
