@@ -18,7 +18,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ...components,
     hr: (props) => <hr {...props} className="my-8 border-zinc-600" />,
     a: (props) => (
-      <a {...props} className="inline-flex items-center gap-0.5 underline">
+      <a
+        {...props}
+        className="inline-flex items-center gap-0.5 underline"
+        target={props.href?.startsWith("https://") ? "_blank" : "_self"}
+        rel="noreferrer"
+      >
         {props.children}
         {props.href?.startsWith("https://") && (
           <FiExternalLink className="inline" />
