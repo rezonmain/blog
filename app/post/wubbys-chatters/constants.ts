@@ -1,3 +1,8 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+dayjs.extend(utc);
+dayjs.extend(timezone);
 import type { BarChart, LineChart } from "@/common/types";
 
 const STATS = {
@@ -239,8 +244,18 @@ const VIEWER_ENGAGEMENT_PER_HOUR_CHART: BarChart = {
   },
 };
 
+const CONVERTED_TIMES = {
+  init: dayjs(STATS.fileMeta.logTimes.init)
+    .tz("America/Los_Angeles")
+    .format("h:mm:ss a"),
+  end: dayjs(STATS.fileMeta.logTimes.end)
+    .tz("America/Los_Angeles")
+    .format("h:mm:ss a"),
+};
+
 export {
   STATS,
+  CONVERTED_TIMES,
   VIEWERSHIP_CHART,
   VIEWER_ENGAGEMENT,
   TOP_10_CHATTERS_CHART,
