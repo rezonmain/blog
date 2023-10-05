@@ -20,6 +20,17 @@ const Footer: React.FC = () => (
       <Link href="/support" className="text-sm hover:underline">
         support
       </Link>
+      <span>|</span>
+      <small className="text-sm">
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://rezonmain.dev"
+          className="hover:underline"
+        >
+          portfolio
+        </a>
+      </small>
     </div>
   </footer>
 );
