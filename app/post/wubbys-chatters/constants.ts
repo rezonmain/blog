@@ -88,18 +88,22 @@ const VIEWER_ENGAGEMENT = [
   {
     channel: "wubby",
     engagement: 47.04,
+    engagementPerHour: 14.81,
   },
   {
     channel: "hasanabi",
     engagement: 28.6,
+    engagementPerHour: 10.24,
   },
   {
     channel: "qtcinderella",
     engagement: 22.89,
+    engagementPerHour: 9.8,
   },
   {
     channel: "willneff",
     engagement: 10.46,
+    engagementPerHour: 5.38,
   },
 ];
 
@@ -183,7 +187,7 @@ const VIEWERSHIP_CHART: LineChart = {
 
 const VIEWER_ENGAGEMENT_CHART: BarChart = {
   options: {
-    aspectRatio: 1,
+    aspectRatio: 1.5,
     plugins: {
       legend: {
         position: "bottom",
@@ -191,10 +195,6 @@ const VIEWER_ENGAGEMENT_CHART: BarChart = {
       title: {
         text: "engagement - compared",
         display: true,
-      },
-      datalabels: {
-        anchor: "end",
-        align: "top",
       },
     },
   },
@@ -212,10 +212,38 @@ const VIEWER_ENGAGEMENT_CHART: BarChart = {
   },
 };
 
+const VIEWER_ENGAGEMENT_PER_HOUR_CHART: BarChart = {
+  options: {
+    aspectRatio: 1.5,
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        text: "engagement per hour - compared",
+        display: true,
+      },
+    },
+  },
+  data: {
+    labels: VIEWER_ENGAGEMENT.map((viewer) => viewer.channel),
+    datasets: [
+      {
+        label: "engagement per hour %",
+        data: VIEWER_ENGAGEMENT.map((viewer) => viewer.engagementPerHour),
+        borderRadius: 6,
+        backgroundColor: "#fafafa",
+        hoverBackgroundColor: "#a1a1aa",
+      },
+    ],
+  },
+};
+
 export {
   STATS,
   VIEWERSHIP_CHART,
   VIEWER_ENGAGEMENT,
   TOP_10_CHATTERS_CHART,
   VIEWER_ENGAGEMENT_CHART,
+  VIEWER_ENGAGEMENT_PER_HOUR_CHART,
 };
