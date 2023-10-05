@@ -1,10 +1,6 @@
-import { Exo_2 } from "next/font/google";
-import type { ComponentProps } from "react";
-import type { Bar } from "react-chartjs-2";
+import type { BarChart, LineChart } from "@/common/types";
 
-const exo2 = Exo_2({ subsets: ["latin"] });
-
-const stats = {
+const STATS = {
   fileMeta: {
     channelName: "paymoneywubby",
     logTimes: {
@@ -35,7 +31,7 @@ const stats = {
   },
 };
 
-const top10ChattersTally = [
+const TOP_10_CHATTERS_TALLY = [
   {
     displayName: "mr_mustash",
     chats: 691,
@@ -88,9 +84,9 @@ const top10ChattersTally = [
   },
 ];
 
-const viewerEngagement = [
+const VIEWER_ENGAGEMENT = [
   {
-    channel: "paymoneywubby",
+    channel: "wubby",
     engagement: 47.04,
   },
   {
@@ -107,87 +103,7 @@ const viewerEngagement = [
   },
 ];
 
-const topChatterChartLabels = top10ChattersTally.map(
-  (chatter) => chatter.displayName,
-);
-
-const viewerEngagementChartLabels = viewerEngagement.map(
-  (viewer) => viewer.channel,
-);
-
-const topChatterChartOptions: ComponentProps<typeof Bar>["options"] = {
-  font: {
-    family: exo2.style.fontFamily,
-  },
-  color: "#fafafa",
-  indexAxis: "y" as const,
-  elements: {
-    bar: {
-      borderWidth: 2,
-    },
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "right" as const,
-    },
-    title: {
-      color: "#fafafa",
-      display: true,
-      text: "top 10 Chatters",
-    },
-  },
-};
-
-const viewerEngagementChartOptions: ComponentProps<typeof Bar>["options"] = {
-  font: {
-    family: exo2.style.fontFamily,
-  },
-  color: "#fafafa",
-  indexAxis: "x",
-  elements: {
-    bar: {
-      borderWidth: 2,
-    },
-  },
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "bottom",
-    },
-    title: {
-      color: "#fafafa",
-      display: true,
-      text: "streamer viewer engagement",
-    },
-  },
-};
-
-const topChatterChartData: ComponentProps<typeof Bar>["data"] = {
-  labels: topChatterChartLabels,
-  datasets: [
-    {
-      label: "chats",
-      data: top10ChattersTally.map((chatter) => chatter.chats),
-      borderRadius: 6,
-      backgroundColor: "#fafafa",
-    },
-  ],
-};
-
-const viewerEngagementChartData: ComponentProps<typeof Bar>["data"] = {
-  labels: viewerEngagementChartLabels,
-  datasets: [
-    {
-      label: "engagement %",
-      data: viewerEngagement.map((channel) => channel.engagement),
-      borderRadius: 6,
-      backgroundColor: "#fafafa",
-    },
-  ],
-};
-
-const viewership = [
+const VIEWERSHIP = [
   { ts: "2023-10-05T00:30:16.505Z", count: 0 },
   { ts: "2023-10-05T00:40:19.559Z", count: 8771 },
   { ts: "2023-10-05T00:50:16.488Z", count: 11786 },
@@ -210,29 +126,96 @@ const viewership = [
   { ts: "2023-10-05T03:40:16.630Z", count: 13226 },
 ];
 
-const viewershipLabels = viewership.map((view) =>
-  new Date(view.ts).toLocaleTimeString(),
-);
-
-const viewershipChartData: ComponentProps<typeof Bar>["data"] = {
-  labels: viewershipLabels,
-  datasets: [
-    {
-      label: "views",
-      data: viewership.map((view) => view.count),
-      borderRadius: 6,
-      backgroundColor: "#fafafa",
+const TOP_10_CHATTERS_CHART: BarChart = {
+  options: {
+    indexAxis: "y",
+    aspectRatio: 1,
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        text: "top 10 Chatters",
+        display: true,
+      },
+      datalabels: {
+        color: "#09090b",
+      },
     },
-  ],
+  },
+  data: {
+    labels: TOP_10_CHATTERS_TALLY.map((chatter) => chatter.displayName),
+    datasets: [
+      {
+        label: "chats",
+        data: TOP_10_CHATTERS_TALLY.map((chatter) => chatter.chats),
+        borderRadius: 6,
+        backgroundColor: "#fafafa",
+      },
+    ],
+  },
+};
+
+const VIEWERSHIP_CHART: LineChart = {
+  options: {
+    aspectRatio: 1,
+    plugins: {
+      datalabels: {
+        display: false,
+      },
+    },
+  },
+  data: {
+    labels: VIEWERSHIP.map((viewership) =>
+      new Date(viewership.ts).toLocaleTimeString(),
+    ),
+    datasets: [
+      {
+        label: "views",
+        data: VIEWERSHIP.map((viewership) => viewership.count),
+        fill: false,
+        borderColor: "#fafafa",
+        tension: 0.05,
+      },
+    ],
+  },
+};
+
+const VIEWER_ENGAGEMENT_CHART: BarChart = {
+  options: {
+    aspectRatio: 1,
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        text: "engagement - compared",
+        display: true,
+      },
+      datalabels: {
+        anchor: "end",
+        align: "top",
+      },
+    },
+  },
+  data: {
+    labels: VIEWER_ENGAGEMENT.map((viewer) => viewer.channel),
+    datasets: [
+      {
+        label: "engagement %",
+        data: VIEWER_ENGAGEMENT.map((viewer) => viewer.engagement),
+        borderRadius: 6,
+        backgroundColor: "#fafafa",
+        hoverBackgroundColor: "#a1a1aa",
+      },
+    ],
+  },
 };
 
 export {
-  top10ChattersTally,
-  topChatterChartOptions,
-  topChatterChartData,
-  stats,
-  viewerEngagement,
-  viewerEngagementChartData,
-  viewerEngagementChartOptions,
-  viewershipChartData,
+  STATS,
+  VIEWERSHIP_CHART,
+  VIEWER_ENGAGEMENT,
+  TOP_10_CHATTERS_CHART,
+  VIEWER_ENGAGEMENT_CHART,
 };
