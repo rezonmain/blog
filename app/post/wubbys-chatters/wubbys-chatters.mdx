@@ -13,7 +13,9 @@ import {
   TOP_10_CHATTERS_CHART,
   VIEWER_ENGAGEMENT_CHART,
   VIEWERSHIP_CHART,
+  VIEWER_ENGAGEMENT_PER_HOUR_CHART,
 } from "./constants";
+import { Maths } from "@/helpers/Maths.helpers.ts";
 
 <PostHeader title={meta.title} author={meta.author} date={meta.publishedAt} />
 
@@ -84,7 +86,7 @@ When the stream ends, the program would stop collecting data, and run an analysi
 
 _Example of the data the analysis step of the program would output_
 
-Then I would gather these STATS, and report conclusions based on them.
+Then I would gather these stats, and report conclusions based on them.
 This program's source code can be [found on github](https://github.com/rezonmain/ercount), and the raw data collected is [available here](https://github.com/rezonmain/ercount) for anyone interested in corroborating my results or for further analysis.
 
 ## the results
@@ -100,7 +102,7 @@ from 5:30pm to 8:40pm PST, collecting chat messages and viewer numbers for the e
 As outputted by the program:
 
 > - Out of an average of **{Math.round(STATS.views.avg).toLocaleString()}** viewers, **{STATS.chatters.unique.toLocaleString()} unique chatters** sent a total of **{STATS.chatters.totalChats.toLocaleString()} messages**,
-> - Meaning **{(STATS.engagement.engagement).toFixed(2)}% of viewers** engaged by sending at least one message on stream,
+> - Meaning **{Maths.times(STATS.engagement.engagement, 100).toFixed(2)}% of viewers** engaged by sending at least one message on stream,
 > - Out of the {STATS.chatters.totalChats.toLocaleString()} unique chatters, the top **20%** are responsible of **76.23%** of all the messages sent!,
 > - Meaning that the top **200 chatters** are responsible of **37.13%** of ALL the messages sent,
 > - And the top **10 chatters** are responsible of **6.40%** of all the messages sent
@@ -121,20 +123,24 @@ I just want to point out that viewership peaked when Alex Johns was being choked
 
 ### engagement
 
-As mentioned in the summary of results, **{STATS.engagement.engagement.toFixed(2)}%** of viewers engaged by sending at least one message on stream, I wanted to know how this number compares to other streamers, so I ran this same program on a typical hasanabi stream, on qtcinderella's rain forest charity gala stream, and a late night willneff stream, here are the results:
+As mentioned in the summary of results, **{Maths.times(STATS.engagement.engagement, 100).toFixed(2)}%** of viewers engaged by sending at least one message on stream, I wanted to know how this number compares to other streams, so I ran this same program on a typical hasanabi stream, on qtcinderella's rain forest charity gala stream, and a late night willneff stream, here are the results:
 
 <BarChart {...VIEWER_ENGAGEMENT_CHART} />
 
-Engagement is calculated by diving the amount of unique chatters by the average viewership, and as you can see Wubby has the most out of the 4 streamers, though I think these result aren't that concrete because the engagement here is calculated from only one live stream of each streamer, and the engagement of a streamer can vary wildly depending on the content of the stream, the time of day, the day of the week, etc. So don't conclude anything significant from these results.
+Engagement is being calculated here by diving the amount of unique chatters by the average viewership, and as you can see Wubby has the most out of the 4 streamers. The longer the stream goes on, the more likely it is for viewers to send a message on chat, so adjusting by the duration of the data collection we have:
 
-### conclusion, the top 20%
+<BarChart {...VIEWER_ENGAGEMENT_PER_HOUR_CHART} />
+
+We see that the typical hasanabi stream has an engagement per hour very similar to qtcinderella's stream, but still Wubby comes on top when adjusting by duration. Though I think these result aren't that concrete because the engagement is obtained from only one live stream of each streamer, so don't conclude anything significant from these results.
+
+## conclusion, the top 20%
 
 If you remember, we wanted to answer if the Pareto principle applied to Wubby's chat, and it kinda seems like it does, the top 20% of chatters were responsible for 76.23% of all the messages sent, not quite 80%, but I think that we can conclude that when Wubby _feels_ like the entire chat's turning against him, is really just the top 20% of chatters, so in my opinion Wubby gets _oneguyed_ hard as fuck.
 
 But what about the other streamers, do they get _oneguyed_ to?, lets see:
 
 <Table
-  headers={["streamer", "% of messages by 20% of chatters"]}
+  headers={["streamer", "% of messages by top 20%"]}
   data={[
     ["paymoneywubby", "76.23%"],
     ["willneff", "73.44%"],
