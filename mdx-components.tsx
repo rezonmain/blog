@@ -54,26 +54,26 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <div className="p-2">
         <code
           {...props}
-          className=" overflow-x-scroll rounded-md bg-zinc-900 p-4 font-mono text-sm"
+          className="overflow-x-scroll rounded-md bg-zinc-900 p-4 font-mono text-sm"
         />
       </div>
     ),
     blockquote: (props) => (
       <div className="flex flex-row justify-start pb-8">
-        <div className=" bg-zinc-400 pl-2"></div>
+        <div className="bg-zinc-400 pl-2"></div>
         <blockquote
           {...props}
-          className="rounded-md bg-zinc-900 p-4 pl-4 text-lg font-light tracking-wide [&>p]:pb-0"
+          className="rounded-md bg-zinc-900 p-4 pl-4 text-lg font-light tracking-wide [&>ol]:pb-0 [&>p]:pb-0 [&>ul]:pb-0"
         />
       </div>
     ),
     ul: (props) => (
       <ul
         {...props}
-        className="flex list-inside list-disc flex-col gap-2 text-lg"
+        className="flex list-inside list-disc flex-col gap-2 pb-8 text-lg"
       />
     ),
-    strong: (props) => <strong {...props} className=" font-bold" />,
+    strong: (props) => <strong {...props} className="font-bold" />,
     PostHeader: PostHeader,
     Figure: Figure,
     Spoiler: Spoiler,
