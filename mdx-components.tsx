@@ -49,7 +49,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <div className="p-2">
         <code
           {...props}
-          className=" rounded-md bg-zinc-900 p-4 font-mono text-sm"
+          className=" overflow-x-scroll rounded-md bg-zinc-900 p-4 font-mono text-sm"
         />
       </div>
     ),
