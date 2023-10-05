@@ -176,7 +176,7 @@ const VIEWERSHIP_CHART: LineChart = {
   },
   data: {
     labels: VIEWERSHIP.map((viewership) =>
-      new Date(viewership.ts).toLocaleTimeString(),
+      dayjs(viewership.ts).tz("America/Los_Angeles").format("h:mm"),
     ),
     datasets: [
       {

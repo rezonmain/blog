@@ -61,7 +61,7 @@ _Example of the data the program would collect_
 
 This program would run for the duration of a single PaymoneyWubby's stream on <s>Sunday Oct 1st, 2023</s> (brother was sick as a dog, and Alluux was getting hypnotized) Wednesday, Oct 4th, 2023, the program would also log the number of viewers reported by twitch's API every 10 minutes from the start of stream.
 
-When the stream ends, the program would stop collecting data, and run an analysis on it, this analysis would yield STATS like the total number of messages sent, the number of unique chatters, a tally of messages sent by each chatter, average viewership numbers, etc.
+When the stream ends, the program would stop collecting data, and run a basic statistical analysis on it, this analysis would yield stats like the total number of messages sent, the number of unique chatters, a tally of messages sent by each chatter, average viewership numbers, etc.
 
 ```json
 "fileMeta": {
@@ -97,7 +97,7 @@ The program successfully ran for the stream on Wednesday, Oct 4th, 2023, titled:
 
 > FINALLY BACK LETS GO SO MUCH TO DO CRAMMING CONTENT LIKE MOM CRAMS THE GEARSHIFT STRAIGHT UP THE OL
 
-from {CONVERTED_TIMES.init} to {CONVERTED_TIMES.end} PST, collecting chat messages and viewer numbers for the entire duration of the live stream.
+from {CONVERTED_TIMES.init} to {CONVERTED_TIMES.end} PST, collecting chat messages and viewership numbers for the entire duration of the live stream.
 
 ### summary of results
 
@@ -125,7 +125,7 @@ I just want to point out that viewership peaked when Alex Johns was being choked
 
 ### engagement
 
-As mentioned in the summary of results, **{Maths.times(STATS.engagement.engagement, 100).toFixed(2)}%** of viewers engaged by sending at least one message on stream, I wanted to know how this number compares to other streams, so I ran this same program on a typical hasanabi stream, on qtcinderella's rain forest charity gala stream, and a late night willneff stream, here are the results:
+As mentioned in the summary of results, **{Maths.times(STATS.engagement.engagement, 100).toFixed(2)}%** of viewers engaged by sending at least one message on stream, I wanted to know how this number compared to other streams, so I ran this same program on a typical hasanabi stream, on qtcinderella's rain forest charity gala stream, and a late night willneff stream, here are the results:
 
 <BarChart {...VIEWER_ENGAGEMENT_CHART} />
 
@@ -133,11 +133,11 @@ Engagement is being calculated here by diving the amount of unique chatters by t
 
 <BarChart {...VIEWER_ENGAGEMENT_PER_HOUR_CHART} />
 
-We see that the typical hasanabi stream has an engagement per hour very similar to qtcinderella's stream, but still Wubby comes on top when adjusting by duration. Though I think these result aren't that concrete because the engagement is obtained from only one live stream of each streamer, so don't conclude anything significant from these results.
+We see that the typical hasanabi stream has an engagement per hour very similar to qtcinderella's stream, but Wubby still comes on top when adjusting by duration. Though I think these result aren't that concrete because the engagement is obtained from only one live stream of each streamer, so don't conclude anything significant from these results.
 
 ## conclusion, the top 20%
 
-If you remember, we wanted to answer if the Pareto principle applied to Wubby's chat, and it kinda seems like it does, the top 20% of chatters were responsible for 76.23% of all the messages sent, not quite 80%, but I think that we can conclude that when Wubby _feels_ like the entire chat's turning against him, is really just the top 20% of chatters, so in my opinion Wubby gets _oneguyed_ hard as fuck.
+If you remember, we wanted to answer if the Pareto principle applied to Wubby's chat, and it kinda seems like it does, the top 20% of chatters were responsible for 76.23% of all the messages sent, not quite 80%, but I must conclude that when Wubby _feels_ like most of the chat's turning against him, is really just 20% of chatters who are, so in my professional opinion Wubby gets _oneguyed_ hard as fuck.
 
 But what about the other streamers, do they get _oneguyed_ to?, lets see:
 
@@ -161,4 +161,4 @@ Holy crap, looks like is pretty consistent across all of our limited 4 measureme
 
 ## support
 
-If you found any value in [this consider supporting me](/support), thanks 🥹
+It took me like 5 entire work days to make not only the program, but this article and the blog itself from scratch, so if you appreciate the effort, or if you found any value in [this consider supporting me](/support), thanks 🥹, it helps me feed my 2 cats.
